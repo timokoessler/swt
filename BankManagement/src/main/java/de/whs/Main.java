@@ -78,9 +78,42 @@ public class Main {
             throw new InvalidParameterException("Password incorrect");
         }
 
+        AccountActions(accountPosition);
+    }
+
+    private static void AccountActions(int accountPosition) {
         ClearScreen();
+
         System.out.println("Welcome");
         System.out.println("Account balance: " + accounts.get(accountPosition).Balance);
+
+        System.out.println("What do you want to do?");
+        System.out.println("Deposit (1)");
+        System.out.println("Withdraw (2)");
+        System.out.println("Sign out (3)");
+
+        Scanner scanner = new Scanner(System.in);
+        int action = scanner.nextInt();
+
+        switch (action) {
+            case 1:
+                System.out.println("How much money do you want to deposit");
+                float depositAmount = scanner.nextFloat();
+                accounts.get(accountPosition).Balance += depositAmount;
+                AccountActions(accountPosition);
+                break;
+            case 2:
+                System.out.println("How much money do you want to withdraw");
+                float withdrawAmount = scanner.nextFloat();
+                accounts.get(accountPosition).Balance -= withdrawAmount;
+                AccountActions(accountPosition);
+                break;
+            case 3:
+                main(null);
+                break;
+            default:
+                throw new InvalidParameterException("Invalid action");
+        }
     }
 
     private static void ClearScreen() {
