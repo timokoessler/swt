@@ -39,8 +39,9 @@ public class SimpleServer extends Server
 	protected Map<String, Person> personen;
 	protected Map<String, String> passwoerter;
 	protected Map<String, Map<String, Vector<Termin>>> teilnehmerTermine;
+	private int newTerminID = 0;
 		// verwaltet die Teilnehmer-Termin-Assoziationen
-		// speichert zu jedem Personenkürzel-String eine Map
+		// speichert zu jedem Personenkï¿½rzel-String eine Map
 		// diese Map liefert zu jedem Datums-String einen Vector
 		// dieser Vector enthaelt alle Termine zur Teilnehmerperson am konkreten Datum
 //  TODO analoge Datenstruktur und Interface-Methoden fuer Besitzer-Assoziation einfuegen?	
@@ -177,6 +178,9 @@ public class SimpleServer extends Server
 	{
 		logger.fine("Insertion of date " + termin);
 		
+		termin.setId(newTerminID);
+		newTerminID++;
+		
 		// insert into teilnehmerTermine
 		Collection<Person> teilnehmer = termin.getTeilnehmer();
 		for (Person p : teilnehmer)
@@ -255,14 +259,26 @@ public class SimpleServer extends Server
 
 	public Termin getTermin(int terminId) throws TerminException
 	{
-		throw new TerminException("Not yet implemented!");
-		// TODO Auto-generated method stub
+		for (Map<String, Vector<Termin>> personTermine : teilnehmerTermine.values()) {
+	        for (Vector<Termin> termine : personTermine.values()) {
+	            for (Termin termin : termine) {
+	               if(termin.getId() == terminId) {
+	            	   return termin;
+	               }
+	            }
+	        }
+	    }
+		throw new TerminException("Termin not found");
 	}
 	
 	public void delete(int terminID) throws TerminException
 	{
-		throw new TerminException("Not yet implemented!");
-		// TODO Auto-generated method stub
+		Termin termin = getTermin(terminID);
+		if(termin != null) {
+			delete(termin);
+			return;
+		}
+		throw new TerminException("Termin not found");
 	}
 
 	public Vector<Termin> getTermineVom(Datum dat, Person tn)
@@ -315,6 +331,18 @@ public class SimpleServer extends Server
 		return result;
 	}
 	
+	public Vector<Termin> getAlleTermine() {
+	    Vector<Termin> alleTermine = new Vector<Termin>();
+	    
+	    for (Map<String, Vector<Termin>> personTermine : teilnehmerTermine.values()) {
+	        for (Vector<Termin> termine : personTermine.values()) {
+	            alleTermine.addAll(termine);
+	        }
+	    }
+
+	    return alleTermine;
+	}
+		
 	public Vector<Termin> getTermineVom(Datum dat, Vector<Person> teilnehmer) 
 			throws TerminException 
 	{

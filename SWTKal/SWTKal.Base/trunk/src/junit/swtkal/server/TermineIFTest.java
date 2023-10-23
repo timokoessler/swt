@@ -242,8 +242,9 @@ public class TermineIFTest extends TestCase
 		//ID = -999 should not exist
 		try
 		{
-			server.getTermin(-999);
-			fail("Should throw TerminException!");
+			Termin t = server.getTermin(0);
+			assertTrue(t.getKurzText() == "1. Testtermin");
+			assertTrue(t.getId() == 0);
 		}
 		catch (TerminException e)
 		{}

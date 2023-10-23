@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.util.*;
 
 import swtkal.client.Client;
+import swtkal.domain.Person;
 import swtkal.exceptions.PersonException;
 import swtkal.swing.elements.person.LoginDialog;
 
@@ -51,8 +52,11 @@ public class SwingClient extends Client implements ActionListener
 		try
 		{
 			frame = new JFrame();
-			LoginDialog connect = new LoginDialog(frame, server);
-			user = connect.getUser();
+			// LoginDialog connect = new LoginDialog(frame, server);
+			String userKuerzel = "USER";
+			String userPass = "123456798";
+			server.insert(new Person("DEFAULT", "USER", userKuerzel), userPass);
+			user = server.authenticatePerson(userKuerzel, userPass);
 		}
 		catch (PersonException e)
 		{
@@ -94,9 +98,9 @@ public class SwingClient extends Client implements ActionListener
 			iToDo.addActionListener(this);
 			mEintraege.add(iToDo);
 	
-			JMenuItem iClear = new JMenuItem("Datensäuberung");
+			JMenuItem iClear = new JMenuItem("Datensï¿½uberung");
 			iClear.setMnemonic('S');
-			iClear.setActionCommand("Löschen");
+			iClear.setActionCommand("Lï¿½schen");
 			iClear.setEnabled(false);
 			iClear.addActionListener(this);
 			mEintraege.add(iClear);
@@ -136,7 +140,7 @@ public class SwingClient extends Client implements ActionListener
 		mVerwalten.setMnemonic('V');
 		mbar.add(mVerwalten);
 
-			JMenuItem iPerson = new JMenuItem("Persönliche Daten");
+			JMenuItem iPerson = new JMenuItem("Persï¿½nliche Daten");
 			iPerson.setMnemonic('P');
 			iPerson.setActionCommand("User");
 			iPerson.setEnabled(false);
@@ -244,7 +248,7 @@ public class SwingClient extends Client implements ActionListener
 //			else if (c.equals("ToDo"))
 //			{
 //			}
-//			else if (c.equals("Löschen"))
+//			else if (c.equals("Lï¿½schen"))
 //			{
 //			}
 			else if (c.equals("Tag"))

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="tags/WS13_14/src"/>
+	<classpathentry kind="src" path="tags/WS19_20/src"/>
+	<classpathentry kind="src" path="trunk/src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
